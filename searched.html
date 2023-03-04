@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-dark"> <!--navbar section-->
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">BOOK STORE APP</i></a>
+        </div>
+    </nav>
+    <main class="main">
+        <div class="mainTwo" id="mainTwo">
+
+        </div>
+    </main>
+    <div class="products" id="main">
+    </div>
+    <script>
+        let main = document.querySelector(".main");
+        let Mdiv = document.createElement('div')
+        Mdiv.setAttribute("class", "listt");
+        let Mdiv1 = document.createElement('div')
+        let Mdiv2 = document.createElement('button')
+        Mdiv1.innerHTML = "Search Results -";
+        Mdiv.appendChild(Mdiv1);
+        main.prepend(Mdiv);
+
+
+        let id = localStorage.getItem('id');
+        let arrays = JSON.parse(localStorage.getItem('data'));
+        let arr = arrays[id].array
+        console.log(arr)
+
+        mainTwo.innerHTML = "";
+        let i = 1;
+        let div = document.createElement('div')
+        div.setAttribute("class", "list");
+        let div1 = document.createElement('div')
+        let div2 = document.createElement('div')
+        div1.innerHTML = `${i++} . ${arrays[id].title}`;
+        div2.innerHTML = "Searched on: " + arrays[id].time.replaceAll(',', " at ");
+        div.appendChild(div1);
+        div.appendChild(div2);
+        mainTwo.appendChild(div)
+
+        let divMain = document.querySelector(".products");
+        arr.map((item) => {
+            divMain.innerHTML += `
+            <div class="product">
+                <img src=${item.volumeInfo.imageLinks.thumbnail} alt="">         
+            <h3><p class="res">${item.volumeInfo.title}</p></h3> 
+            <p class="res">Author: ${item.volumeInfo.authors ? item.volumeInfo.authors : "Lindsey Mantoan"}</p>
+            <p class="it">category: ${item.volumeInfo.categories ? item.volumeInfo.categories : "Fiction"}</p>
+            <p class="it">Page Count: ${item.volumeInfo.pageCount ? item.volumeInfo.pageCount : 387}</p>
+            <p class="it">Publisher: ${item.volumeInfo.publisher ? item.volumeInfo.publisher : "Routledge"}</p>
+            <button class="btn buy">BUY NOW</button>
+                        
+                  </div>`
+        })
+
+
+    </script>
+</body>
+
+</html>

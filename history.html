@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HISTORY</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* .navbar{
+            padding: 10px;
+            height: 34px;
+        } */
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-dark"> <!--navbar section-->
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">BOOK STORE APP</a>
+        </div>
+    </nav>
+    <main class="main">
+
+        <div class="mainTwo" id="mainTwo">
+
+        </div>
+    </main>
+
+   
+
+    <!-- <script src="./script.js"></script> -->
+
+    <script>
+
+        let i=1;
+        function history() {
+            let mainTwo = document.querySelector(".mainTwo");
+            let main = document.querySelector(".main");
+            
+            if (localStorage.getItem('data') != null) {
+               
+                let Mdiv = document.createElement('div')
+                Mdiv.setAttribute("class", "listt");
+                let Mdiv1 = document.createElement('div')
+                let Mdiv2 = document.createElement('button')
+                Mdiv1.innerHTML="Your Previous Searches";
+                Mdiv2.setAttribute("class", "btnn clear");
+                Mdiv2.innerHTML="Clear Search";
+                Mdiv.appendChild(Mdiv1);
+                Mdiv.appendChild(Mdiv2);
+                main.prepend(Mdiv)
+
+                mainTwo.innerHTML = "";
+                let newArr = JSON.parse(localStorage.getItem('data'))
+                newArr.map((newData) => {
+
+                    let div = document.createElement('div')
+                    div.setAttribute("class", "list");
+                    let div1 = document.createElement('div')
+                    let div2 = document.createElement('div')
+                    div.dataset.id=i-1;
+                    div1.innerHTML = `${i++} . ${newData.title}`;
+                    div2.innerHTML = "Searched on: " + newData.time.replaceAll(',', " at ");
+                    div.appendChild(div1);
+                    div.appendChild(div2);
+                    mainTwo.appendChild(div)
+                })
+                let clr = document.querySelector(".clear");
+                clr.addEventListener('click',clear)
+            }
+            else {
+                mainTwo.innerHTML = "You have no Search History!!!!"
+            }
+        }
+
+        function clear() {
+            localStorage.removeItem('data');
+            let mainTwo = document.querySelector(".mainTwo");
+            let list = document.querySelector(".listt");
+            let main = document.querySelector(".main");
+            list.innerHTML="";
+            list.style.display="none"
+            mainTwo.innerHTML = "You have no Search History!!!!"
+        }
+
+        // if (window.location.href == 'http://127.0.0.1:5500/F3-MOD-booksApi/history.html') {
+            history()
+        // }
+
+        let lists=document.querySelectorAll('.list');
+        lists.forEach(el => {
+            el.addEventListener('click',()=>{
+                console.log(el);
+                localStorage.setItem('id',el.dataset.id)
+                window.location.href="./searched.html";
+            })
+        });
+    </script>
+</body>
+
+</html>
